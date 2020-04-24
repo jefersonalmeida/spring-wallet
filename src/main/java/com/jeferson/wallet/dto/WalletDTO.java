@@ -15,7 +15,7 @@ public class WalletDTO {
     private Long id;
 
     @NotNull(message = "O nome é obrigatório")
-    @Size(min = 3, max = 100, message = "O nome deve conter entre :min e :max caracteres")
+    @Size(min = 3, max = 100)
     private String name;
 
     @NotNull(message = "Insira um valor para sua carteira")
