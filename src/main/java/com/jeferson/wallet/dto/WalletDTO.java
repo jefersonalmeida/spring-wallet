@@ -18,6 +18,6 @@ public class WalletDTO {
     @Size(min = 3, max = 100, message = "O nome deve conter entre :min e :max caracteres")
     private String name;
 
-    @NotNull(message = "O valor é obrigatório")
+    @NotNull(message = "Insira um valor para sua carteira")
     private BigDecimal value;
 }
