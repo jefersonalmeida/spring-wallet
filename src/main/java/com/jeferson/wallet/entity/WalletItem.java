@@ -1,5 +1,6 @@
 package com.jeferson.wallet.entity;
 
+import com.jeferson.wallet.util.enums.TypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,7 +34,8 @@ public class WalletItem implements Serializable {
 
     @Column(nullable = false)
     @NotNull()
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private TypeEnum type;
 
     @Column(nullable = false)
     @NotNull()
