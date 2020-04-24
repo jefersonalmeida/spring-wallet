@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @AutoConfigureMockMvc
 public class UserControllerTest {
 
+    private static final Long ID = 1L;
     private static final String NAME = "Usuário Teste";
     private static final String EMAIL = "email@teste.com";
     private static final String PASSWORD = "123456";
@@ -41,25 +42,47 @@ public class UserControllerTest {
         BDDMockito.given(service.save(Mockito.any(User.class))).willReturn(getMockUser());
 
         mvc.perform(MockMvcRequestBuilders.post(URL)
-                .content(getJsonPayload())
+                .content(getJsonPayload(ID, NAME, EMAIL, PASSWORD))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-        ).andExpect(MockMvcResultMatchers.status().isCreated());
+        )
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.id").value(ID))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.name").value(NAME))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.email").value(EMAIL))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.password").value(PASSWORD))
+        ;
+    }
+
+    @Test
+    public void testSaveInvalidUser() throws Exception {
+        BDDMockito.given(service.save(Mockito.any(User.class))).willReturn(getMockUser());
+
+        mvc.perform(MockMvcRequestBuilders.post(URL)
+                .content(getJsonPayload(ID, NAME, "email", PASSWORD))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        )
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.errors[0]").value("must be a well-formed email address"))
+        ;
     }
 
     public User getMockUser() {
         User u = new User();
+        u.setId(ID);
         u.setName(NAME);
         u.setEmail(EMAIL);
         u.setPassword(PASSWORD);
         return u;
     }
 
-    public String getJsonPayload() throws JsonProcessingException {
+    public String getJsonPayload(Long id, String name, String email, String password) throws JsonProcessingException {
         UserDTO dto = new UserDTO();
-        dto.setName(NAME);
-        dto.setEmail(EMAIL);
-        dto.setPassword(PASSWORD);
+        dto.setId(id);
+        dto.setName(name);
+        dto.setEmail(email);
+        dto.setPassword(password);
 
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(dto);
