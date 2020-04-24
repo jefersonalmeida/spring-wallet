@@ -1,20 +1,14 @@
 package com.jeferson.wallet;
 
+import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.annotation.AliasFor;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
 @SpringBootTest
-@ActiveProfiles
-public @interface WalletApplicationTests {
+@ActiveProfiles(value = "test")
+public class WalletApplicationTests {
 
-    @AliasFor(annotation = ActiveProfiles.class, attribute = "profiles") String[] activeProfiles() default {"test"};
-
+    @Test
+    public void contextLoads() {
+    }
 }
