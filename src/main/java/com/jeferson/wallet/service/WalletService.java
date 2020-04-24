@@ -4,6 +4,6 @@ import com.jeferson.wallet.entity.Wallet;
 
 public interface WalletService {
 
-    Wallet save(Wallet u);
+    Wallet save(Wallet object);
 
 }

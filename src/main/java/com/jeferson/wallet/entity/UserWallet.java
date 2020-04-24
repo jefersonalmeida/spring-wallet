@@ -10,8 +10,8 @@ import java.io.Serializable;
 @Data
 public class UserWallet implements Serializable {
 
-
     private static final long serialVersionUID = -8329395105446352469L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

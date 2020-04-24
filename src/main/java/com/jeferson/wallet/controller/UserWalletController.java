@@ -1,9 +1,11 @@
 package com.jeferson.wallet.controller;
 
-import com.jeferson.wallet.dto.WalletDTO;
+import com.jeferson.wallet.dto.UserWalletDTO;
+import com.jeferson.wallet.entity.User;
+import com.jeferson.wallet.entity.UserWallet;
 import com.jeferson.wallet.entity.Wallet;
 import com.jeferson.wallet.response.Response;
-import com.jeferson.wallet.service.WalletService;
+import com.jeferson.wallet.service.UserWalletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,41 +18,48 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(path = "wallet")
-public class WalletController {
+@RequestMapping(path = "user-wallet")
+public class UserWalletController {
 
     @Autowired
-    private WalletService service;
+    private UserWalletService service;
 
     @PostMapping
-    public ResponseEntity<Response<WalletDTO>> store(@Valid @RequestBody WalletDTO dto, BindingResult result) {
+    public ResponseEntity<Response<UserWalletDTO>> store(@Valid @RequestBody UserWalletDTO dto, BindingResult result) {
 
-        Response<WalletDTO> response = new Response<>();
+        Response<UserWalletDTO> response = new Response<>();
         if (result.hasErrors()) {
             result.getAllErrors().forEach(e -> response.getErrors().add(e.getDefaultMessage()));
             return ResponseEntity.badRequest().body(response);
         }
 
-        Wallet object = service.save(this.convertDTOToEntity(dto));
+        UserWallet object = service.save(this.convertDTOToEntity(dto));
 
         response.setData(this.convertEntityToDTO(object));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    private Wallet convertDTOToEntity(WalletDTO dto) {
-        Wallet object = new Wallet();
+    private UserWallet convertDTOToEntity(UserWalletDTO dto) {
+        UserWallet object = new UserWallet();
+
+        User u = new User();
+        u.setId(dto.getUsers());
+
+        Wallet w = new Wallet();
+        w.setId(dto.getWallets());
+
         object.setId(dto.getId());
-        object.setName(dto.getName());
-        object.setValue(dto.getValue());
+        object.setUsers(u);
+        object.setWallets(w);
         return object;
     }
 
-    private WalletDTO convertEntityToDTO(Wallet object) {
-        WalletDTO dto = new WalletDTO();
+    private UserWalletDTO convertEntityToDTO(UserWallet object) {
+        UserWalletDTO dto = new UserWalletDTO();
         dto.setId(object.getId());
-        dto.setName(object.getName());
-        dto.setValue(object.getValue());
+        dto.setUsers(object.getUsers().getId());
+        dto.setWallets(object.getWallets().getId());
         return dto;
     }
 }

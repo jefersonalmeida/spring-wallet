@@ -13,7 +13,7 @@ public class WalletServiceImpl implements WalletService {
     WalletRepository repository;
 
     @Override
-    public Wallet save(Wallet u) {
-        return repository.save(u);
+    public Wallet save(Wallet object) {
+        return repository.save(object);
     }
 }
