@@ -1,10 +1,9 @@
 package com.jeferson.wallet.controller;
 
-import com.jeferson.wallet.dto.UserDTO;
-import com.jeferson.wallet.entity.User;
+import com.jeferson.wallet.dto.WalletDTO;
+import com.jeferson.wallet.entity.Wallet;
 import com.jeferson.wallet.response.Response;
-import com.jeferson.wallet.service.UserService;
-import com.jeferson.wallet.util.BCrypt;
+import com.jeferson.wallet.service.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,42 +16,41 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("user")
-public class UserController {
+@RequestMapping("wallet")
+public class WalletController {
 
     @Autowired
-    private UserService service;
+    private WalletService service;
 
     @PostMapping
-    public ResponseEntity<Response<UserDTO>> store(@Valid @RequestBody UserDTO dto, BindingResult result) {
+    public ResponseEntity<Response<WalletDTO>> store(@Valid @RequestBody WalletDTO dto, BindingResult result) {
 
-        Response<UserDTO> response = new Response<>();
-        if(result.hasErrors()) {
+        Response<WalletDTO> response = new Response<>();
+        if (result.hasErrors()) {
             result.getAllErrors().forEach(e -> response.getErrors().add(e.getDefaultMessage()));
             return ResponseEntity.badRequest().body(response);
         }
 
-        User user = service.save(this.convertDTOToEntity(dto));
+        Wallet object = service.save(this.convertDTOToEntity(dto));
 
-        response.setData(this.convertEntityToDTO(user));
+        response.setData(this.convertEntityToDTO(object));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    private User convertDTOToEntity(UserDTO dto) {
-        User object = new User();
+    private Wallet convertDTOToEntity(WalletDTO dto) {
+        Wallet object = new Wallet();
         object.setId(dto.getId());
         object.setName(dto.getName());
-        object.setEmail(dto.getEmail());
-        object.setPassword(BCrypt.getHash(dto.getPassword()));
+        object.setValue(dto.getValue());
         return object;
     }
 
-    private UserDTO convertEntityToDTO(User object) {
-        UserDTO dto = new UserDTO();
+    private WalletDTO convertEntityToDTO(Wallet object) {
+        WalletDTO dto = new WalletDTO();
         dto.setId(object.getId());
         dto.setName(object.getName());
-        dto.setEmail(object.getEmail());
+        dto.setValue(object.getValue());
         return dto;
     }
 }
