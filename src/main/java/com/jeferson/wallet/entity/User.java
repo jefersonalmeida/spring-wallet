@@ -1,4 +1,4 @@
-package com.jeferson.wallet.entities;
+package com.jeferson.wallet.entity;
 
 import lombok.Data;
 

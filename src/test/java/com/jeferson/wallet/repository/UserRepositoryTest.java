@@ -1,6 +1,6 @@
-package com.jeferson.wallet.repositories;
+package com.jeferson.wallet.repository;
 
-import com.jeferson.wallet.entities.User;
+import com.jeferson.wallet.entity.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +25,7 @@ public class UserRepositoryTest {
     @Before
     public void setUp() {
         User u = new User();
-        u.setName("User Test");
+        u.setName("Usuário Teste");
         u.setEmail(EMAIL);
         u.setPassword("123456");
         repository.save(u);
@@ -39,7 +39,7 @@ public class UserRepositoryTest {
     @Test
     public void testSave() {
         User u = new User();
-        u.setName("Teste");
+        u.setName("Usuário Teste");
         u.setEmail("teste@teste.com");
         u.setPassword("123456");
 

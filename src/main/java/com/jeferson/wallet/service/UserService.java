@@ -1,6 +1,6 @@
-package com.jeferson.wallet.services;
+package com.jeferson.wallet.service;
 
-import com.jeferson.wallet.entities.User;
+import com.jeferson.wallet.entity.User;
 
 import java.util.Optional;
 

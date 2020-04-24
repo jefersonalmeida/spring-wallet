@@ -1,8 +1,8 @@
-package com.jeferson.wallet.services.impl;
+package com.jeferson.wallet.service.impl;
 
-import com.jeferson.wallet.entities.User;
-import com.jeferson.wallet.repositories.UserRepository;
-import com.jeferson.wallet.services.UserService;
+import com.jeferson.wallet.entity.User;
+import com.jeferson.wallet.repository.UserRepository;
+import com.jeferson.wallet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

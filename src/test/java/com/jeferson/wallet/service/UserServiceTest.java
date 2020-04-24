@@ -1,7 +1,7 @@
-package com.jeferson.wallet.services;
+package com.jeferson.wallet.service;
 
-import com.jeferson.wallet.entities.User;
-import com.jeferson.wallet.repositories.UserRepository;
+import com.jeferson.wallet.entity.User;
+import com.jeferson.wallet.repository.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
