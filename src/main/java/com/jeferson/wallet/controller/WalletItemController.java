@@ -1,10 +1,13 @@
 package com.jeferson.wallet.controller;
 
 import com.jeferson.wallet.dto.WalletItemDTO;
+import com.jeferson.wallet.entity.UserWallet;
 import com.jeferson.wallet.entity.Wallet;
 import com.jeferson.wallet.entity.WalletItem;
 import com.jeferson.wallet.response.Response;
+import com.jeferson.wallet.service.UserWalletService;
 import com.jeferson.wallet.service.WalletItemService;
+import com.jeferson.wallet.util.Util;
 import com.jeferson.wallet.util.enums.TypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,7 +30,10 @@ import java.util.Optional;
 public class WalletItemController {
 
     @Autowired
-    private WalletItemService service;
+    private WalletItemService walletItemService;
+
+    @Autowired
+    private UserWalletService userWalletService;
 
     @PostMapping
     public ResponseEntity<Response<WalletItemDTO>> store(@Valid @RequestBody WalletItemDTO dto, BindingResult result) {
@@ -38,7 +44,7 @@ public class WalletItemController {
             return ResponseEntity.badRequest().body(response);
         }
 
-        WalletItem object = service.save(this.convertDTOToEntity(dto));
+        WalletItem object = walletItemService.save(this.convertDTOToEntity(dto));
 
         response.setData(this.convertEntityToDTO(object));
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -53,8 +59,15 @@ public class WalletItemController {
     ) {
 
         Response<Page<WalletItemDTO>> response = new Response<>();
-        Page<WalletItem> items = service.findBetweenDates(wallet, startDate, endDate, page);
 
+        Optional<UserWallet> uw = userWalletService.findByUsersIdAndWalletsId(Util.getAuthenticatedUserId(), wallet);
+
+        if(!uw.isPresent()) {
+            response.getErrors().add("Você não tem acesso a essa carteira");
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        Page<WalletItem> items = walletItemService.findBetweenDates(wallet, startDate, endDate, page);
         Page<WalletItemDTO> dto = items.map(this::convertEntityToDTO);
         response.setData(dto);
         return ResponseEntity.ok().body(response);
@@ -67,7 +80,7 @@ public class WalletItemController {
     ) {
 
         Response<List<WalletItemDTO>> response = new Response<>();
-        List<WalletItem> list = service.findByWalletAndType(wallet, TypeEnum.getEnum(type));
+        List<WalletItem> list = walletItemService.findByWalletAndType(wallet, TypeEnum.getEnum(type));
 
         List<WalletItemDTO> dto = new ArrayList<>();
         list.forEach(i -> dto.add(this.convertEntityToDTO(i)));
@@ -80,7 +93,7 @@ public class WalletItemController {
     public ResponseEntity<Response<BigDecimal>> sumByWalletId(@PathVariable("wallet") Long wallet) {
 
         Response<BigDecimal> response = new Response<>();
-        BigDecimal value = service.sumByWalletId(wallet);
+        BigDecimal value = walletItemService.sumByWalletId(wallet);
 
         response.setData(value == null ? BigDecimal.ZERO : value);
         return ResponseEntity.ok().body(response);
@@ -89,7 +102,7 @@ public class WalletItemController {
     @PutMapping
     public ResponseEntity<Response<WalletItemDTO>> update(@Valid @RequestBody WalletItemDTO dto, BindingResult result) {
         Response<WalletItemDTO> response = new Response<>();
-        Optional<WalletItem> wi = service.findById(dto.getId());
+        Optional<WalletItem> wi = walletItemService.findById(dto.getId());
 
         if (!wi.isPresent()) {
             result.addError(new ObjectError("WalletItem", "WalletItem não encontrado"));
@@ -102,7 +115,7 @@ public class WalletItemController {
             return ResponseEntity.badRequest().body(response);
         }
 
-        WalletItem saved = service.save(this.convertDTOToEntity(dto));
+        WalletItem saved = walletItemService.save(this.convertDTOToEntity(dto));
 
         response.setData(this.convertEntityToDTO(saved));
         return ResponseEntity.ok().body(response);
@@ -111,14 +124,14 @@ public class WalletItemController {
     @DeleteMapping(value = "{walletItemId}")
     public ResponseEntity<Response<String>> destroy(@PathVariable("walletItemId") Long walletItemId) {
         Response<String> response = new Response<>();
-        Optional<WalletItem> wi = service.findById(walletItemId);
+        Optional<WalletItem> wi = walletItemService.findById(walletItemId);
 
         if (!wi.isPresent()) {
             response.getErrors().add("WalletItem de id " + walletItemId + " não encontrada");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
 
-        service.deleteById(walletItemId);
+        walletItemService.deleteById(walletItemId);
         response.setData("WalletItem de id " + walletItemId + " apagada com sucesso");
         return ResponseEntity.ok().body(response);
     }

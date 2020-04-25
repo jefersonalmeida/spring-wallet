@@ -6,6 +6,8 @@ import com.jeferson.wallet.service.UserWalletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserWalletServiceImpl implements UserWalletService {
 
@@ -15,5 +17,10 @@ public class UserWalletServiceImpl implements UserWalletService {
     @Override
     public UserWallet save(UserWallet object) {
         return repository.save(object);
+    }
+
+    @Override
+    public Optional<UserWallet> findByUsersIdAndWalletsId(Long user, Long wallet) {
+        return repository.findByUsersIdAndWalletsId(user, wallet);
     }
 }
