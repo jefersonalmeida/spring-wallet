@@ -15,7 +15,7 @@ import java.util.List;
 
 public interface WalletItemRepository extends JpaRepository<WalletItem, Long> {
 
-    Page<WalletItem> findAllByWalletIdAndDateGreaterThanEqualAndDateLessThanEqual(Long wallet, Date init, Date end, Pageable pageable);
+    Page<WalletItem> findAllByWalletIdAndDateGreaterThanEqualAndDateLessThanEqual(Long wallet, Date init, Date end, Pageable page);
 
     List<WalletItem> findByWalletIdAndType(Long wallet, TypeEnum type);
 

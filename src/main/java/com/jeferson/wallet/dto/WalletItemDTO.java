@@ -1,5 +1,6 @@
 package com.jeferson.wallet.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
@@ -20,6 +21,7 @@ public class WalletItemDTO {
     private Long wallet;
 
     @NotNull(message = "Informe uma data")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", locale = "pt-BR", timezone = "Brazil/East")
     private Date date;
 
     @NotNull(message = "Informe um tipo")
