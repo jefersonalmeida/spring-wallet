@@ -5,7 +5,6 @@ import com.jeferson.wallet.entity.Wallet;
 import com.jeferson.wallet.entity.WalletItem;
 import com.jeferson.wallet.response.Response;
 import com.jeferson.wallet.service.WalletItemService;
-import com.jeferson.wallet.util.BCrypt;
 import com.jeferson.wallet.util.enums.TypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -115,12 +114,12 @@ public class WalletItemController {
         Optional<WalletItem> wi = service.findById(walletItemId);
 
         if (!wi.isPresent()) {
-            response.getErrors().add("Carteira de id " + walletItemId + " não encontrada");
+            response.getErrors().add("WalletItem de id " + walletItemId + " não encontrada");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
 
         service.deleteById(walletItemId);
-        response.setData("Carteira de id " + walletItemId + " apagada com sucesso");
+        response.setData("WalletItem de id " + walletItemId + " apagada com sucesso");
         return ResponseEntity.ok().body(response);
     }
 

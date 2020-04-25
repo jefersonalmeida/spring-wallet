@@ -27,7 +27,7 @@ public class UserController {
     public ResponseEntity<Response<UserDTO>> store(@Valid @RequestBody UserDTO dto, BindingResult result) {
 
         Response<UserDTO> response = new Response<>();
-        if(result.hasErrors()) {
+        if (result.hasErrors()) {
             result.getAllErrors().forEach(e -> response.getErrors().add(e.getDefaultMessage()));
             return ResponseEntity.badRequest().body(response);
         }

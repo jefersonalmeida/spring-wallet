@@ -212,7 +212,7 @@ public class WalletItemControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
         )
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data").value("Carteira de id " + ID + " apagada com sucesso"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data").value("WalletItem de id " + ID + " apagada com sucesso"))
         ;
     }
 
@@ -227,7 +227,7 @@ public class WalletItemControllerTest {
         )
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data").doesNotExist())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.errors[0]").value("Carteira de id " + 99 + " não encontrada"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.errors[0]").value("WalletItem de id " + 99 + " não encontrada"))
         ;
     }
 
@@ -252,7 +252,6 @@ public class WalletItemControllerTest {
     }
 
     private DateTimeFormatter getDateFormater() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        return formatter;
+        return DateTimeFormatter.ofPattern("dd-MM-yyyy");
     }
 }

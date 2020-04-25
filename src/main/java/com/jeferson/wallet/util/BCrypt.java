@@ -5,7 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class BCrypt {
 
     public static String getHash(String password) {
-        if(password.isEmpty()) {
+        if (password.isEmpty()) {
             return null;
         }
 

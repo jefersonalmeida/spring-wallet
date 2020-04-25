@@ -7,7 +7,6 @@ import com.jeferson.wallet.util.enums.TypeEnum;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -74,7 +73,7 @@ public class WalletItemServiceTest {
     }
 
     @Test
-    public void testFindByType(){
+    public void testFindByType() {
         List<WalletItem> list = new ArrayList<>();
         list.add(getMockiWalletItem());
 
