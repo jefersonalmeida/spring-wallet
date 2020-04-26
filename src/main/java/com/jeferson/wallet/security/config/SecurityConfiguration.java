@@ -53,16 +53,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception{
+    protected void configure(HttpSecurity http) throws Exception {
         http.csrf()
                 .disable()
-            .exceptionHandling()
+                .exceptionHandling()
                 .authenticationEntryPoint(unauthorizedHandler)
                 .and()
-            .sessionManagement()
+                .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-            .authorizeRequests()
+                .authorizeRequests()
                 .antMatchers(
                         "/auth/**",
                         "/configuration/security",

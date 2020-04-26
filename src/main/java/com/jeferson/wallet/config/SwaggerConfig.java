@@ -1,17 +1,13 @@
 package com.jeferson.wallet.config;
 
-import com.google.common.collect.Lists;
 import com.jeferson.wallet.security.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -53,7 +49,7 @@ public class SwaggerConfig {
                 .license("Apache 2.0")
                 .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
                 .termsOfServiceUrl("http://swagger.io/terms/")
-                .contact(new Contact("Jeferson Almeida","https://jeferson.net.br", "me@jeferson.net.br"))
+                .contact(new Contact("Jeferson Almeida", "https://jeferson.net.br", "me@jeferson.net.br"))
                 .build();
     }
 

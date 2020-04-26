@@ -31,13 +31,11 @@ import java.util.Optional;
 @RequestMapping(path = "wallet-item")
 public class WalletItemController {
 
+    private static final Logger log = LoggerFactory.getLogger(WalletItemController.class);
     @Autowired
     private WalletItemService walletItemService;
-
     @Autowired
     private UserWalletService userWalletService;
-
-    private static final Logger log = LoggerFactory.getLogger(WalletItemController.class);
 
     @PostMapping
     public ResponseEntity<Response<WalletItemDTO>> store(@Valid @RequestBody WalletItemDTO dto, BindingResult result) {
@@ -66,7 +64,7 @@ public class WalletItemController {
 
         Optional<UserWallet> uw = userWalletService.findByUsersIdAndWalletsId(Util.getAuthenticatedUserId(), wallet);
 
-        if(!uw.isPresent()) {
+        if (!uw.isPresent()) {
             response.getErrors().add("Você não tem acesso a essa carteira");
             return ResponseEntity.badRequest().body(response);
         }
