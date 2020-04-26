@@ -10,5 +10,5 @@ deploy:
   provider: heroku
   strategy: api
   api_key:
-    secure: '69d2e20f-0595-4704-a3c6-4ad91df04eb5'
-  app: 'jeferson-wallet'
+    secure: $SECURE_KEY
+  app: $APP
