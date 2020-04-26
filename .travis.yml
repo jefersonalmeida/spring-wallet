@@ -7,8 +7,7 @@ jdk:
 before_install:
   - export TZ=Brazil/East
 deploy:
-  provider: heroku
-  strategy: api
-  api_key:
-    secure: $SECURE_KEY
+  provider: heroku
   app: $APP
+  api_key:
+    secure: $HEROKU_API_KEY
