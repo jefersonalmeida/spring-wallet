@@ -1,13 +1,14 @@
-dist: trusty
 language: java
+os:
+  - linux
+dist: trusty
 jdk:
   - oraclejdk8
 before_install:
   - export TZ=Brazil/East
 deploy:
   provider: heroku
+  strategy: api
   api_key:
     secure: $SECURE_KEY
   app: $APP
-  on:
-    all_branches: true
