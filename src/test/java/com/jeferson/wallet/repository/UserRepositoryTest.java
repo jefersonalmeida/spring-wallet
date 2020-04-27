@@ -1,6 +1,7 @@
 package com.jeferson.wallet.repository;
 
 import com.jeferson.wallet.entity.User;
+import com.jeferson.wallet.util.enums.RoleEnum;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,6 +31,7 @@ public class UserRepositoryTest {
         u.setName("Usuário Teste");
         u.setEmail(EMAIL);
         u.setPassword("123456");
+        u.setRole(RoleEnum.ROLE_ADMIN);
         repository.save(u);
     }
 
@@ -44,6 +46,7 @@ public class UserRepositoryTest {
         u.setName("Usuário Teste");
         u.setEmail("teste@teste.com");
         u.setPassword("123456");
+        u.setRole(RoleEnum.ROLE_ADMIN);
 
         User response = repository.save(u);
 

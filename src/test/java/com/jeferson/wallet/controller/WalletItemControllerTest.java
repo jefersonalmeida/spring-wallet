@@ -224,7 +224,7 @@ public class WalletItemControllerTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(username = "admin@admin.com", roles = {"ADMIN"})
     public void testDelete() throws Exception {
 
         BDDMockito.given(walletItemService.findById(Mockito.anyLong())).willReturn(Optional.of(new WalletItem()));
@@ -239,7 +239,7 @@ public class WalletItemControllerTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(username = "admin@admin.com", roles = {"ADMIN"})
     public void testDeleteInvalid() throws Exception {
 
         BDDMockito.given(walletItemService.findById(Mockito.anyLong())).willReturn(Optional.empty());

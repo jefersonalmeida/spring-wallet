@@ -64,10 +64,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(
-                        "/auth/**",
                         "/configuration/security",
-                        "/webjars/**",
+                        "/auth/**",
                         "/user/**",
+                        "/webjars/**",
                         "/v2/api-docs",
                         "/swagger-resources/**",
                         "/swagger-ui.html",

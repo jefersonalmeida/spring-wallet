@@ -1,8 +1,10 @@
 package com.jeferson.wallet.entity;
 
+import com.jeferson.wallet.util.enums.RoleEnum;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
@@ -15,13 +17,17 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false)
     private String name;
+
     @Column(nullable = false)
     private String email;
+
     @Column(nullable = false)
     private String password;
-    /*@NotNull
+
+    @NotNull()
     @Enumerated(EnumType.STRING)
-    private RoleEnum role;*/
+    private RoleEnum role;
 }
